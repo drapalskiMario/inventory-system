@@ -1,0 +1,51 @@
+<h2>Pedidos</h2>
+<div class="buttons">
+  <button (click)="showForm()">Cadastrar</button>
+  <button (click)="showSearch()">Buscar pelo Código</button>
+</div>
+
+<div *ngIf="showingForm" class="form-container">
+  <h3>Cadastro de Pedido</h3>
+  <form (ngSubmit)="addOrder()">
+    <label for="customer_id">Codigo do cliente:</label>
+    <input type="number" id="customer_id" [(ngModel)]="newOrder.customer_id" name="customer_id" required>
+    <label for="product_id">Código do produto:</label>
+    <input type="number" id="product_id" [(ngModel)]="newOrder.product_id" name="product_id" required>
+    <label for="quantity">Quantidade:</label>
+    <input type="number" id="quantity" [(ngModel)]="newOrder.quantity" name="quantity" min="0" required>
+    <button type="submit">Cadastrar</button>
+  </form>
+</div>
+
+<div *ngIf="orderAdded" class="success-message">
+  <p>Pedido cadastrado com sucesso! Código do pedido: <strong>{{ newOrderId }}</strong></p>
+</div>
+
+<div *ngIf="showingSearch" class="search-container">
+  <h3>Buscar Pedido</h3>
+  <form (ngSubmit)="searchOrder()">
+    <label for="searchCode">Código do Produto:</label>
+    <input type="text" id="searchCode" [(ngModel)]="searchCode" name="searchCode" required>
+    <button type="submit">Buscar</button>
+  </form>
+</div>
+
+<div *ngIf="orderFound" class="product-details">
+  <h3>Detalhes do Pedido</h3>
+  <p><strong>Código:</strong> {{ orderDetails.id }}</p>
+  <p><strong>Status:</strong> {{ orderDetails.status }}</p>
+  <p><strong>Data:</strong> {{ orderDetails.order_date | date: 'dd/MM/yyyy HH:mm' }}</p>
+  <p><strong>Nome do cliente :</strong> {{ orderDetails.customer.name }}</p>
+  <p><strong>Nome do produto :</strong> {{ orderDetails.product.name }}</p>
+  <p><strong>Valor do produto :</strong> R$ {{ orderDetails.product.price }}</p>
+  <p><strong>Quantidade:</strong> {{ orderDetails.quantity }}</p>
+  <p><strong>Valor total:</strong> R$ {{ orderDetails.total_value }}</p>
+</div>
+
+<div *ngIf="orderNotFound" class="error-message">
+  <p>Produto não encontrado.</p>
+</div>
+
+<div *ngIf="errorOnSave" class="error-message">
+  <p>Erro ao salvar produto.</p>
+</div>

@@ -1,0 +1,42 @@
+services:
+  is-server:
+    container_name: is-server
+    build: ./server/
+    environment:
+      - DB_HOST=is-db
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+      - DB_NAME=inventory
+    depends_on:
+      - is-db
+      - is-redis
+    volumes:
+      - ./server:/var/www/html
+    user: "1000:1000"
+    ports:
+      - "3000:80"
+    networks:
+      - is_network
+
+  is-db:
+    image: mysql:8.0
+    container_name: is-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: inventory
+    ports:
+      - "3306:3306"
+    networks:
+      - is_network
+
+  is-redis:
+    image: redis:latest
+    container_name: is-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - is_network
+
+networks:
+  is_network:
+    driver: bridge

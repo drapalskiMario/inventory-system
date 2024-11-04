@@ -1,0 +1,45 @@
+<h2>Produtos</h2>
+<div class="buttons">
+  <button (click)="showList()">Listar</button>
+  <button (click)="showForm()">Cadastrar</button>
+</div>
+
+<div *ngIf="showingList">
+  <h3>Lista de Produtos</h3>
+  <table>
+    <tr>
+      <th>Cod Produto</th>
+      <th>Nome</th>
+      <th>Descricao</th>
+      <th>Preço</th>
+      <th>Qtd Estoque</th>
+      <th>Ações</th>
+    </tr>
+    <tr *ngFor="let product of products">
+      <td>{{ product.id }}</td>
+      <td>{{ product.name }}</td>
+      <td>{{ product.description }}</td>
+      <td>R$ {{ product.price }}</td>
+      <td>{{ product.stock_quantity }}</td>
+      <td class="buttons">
+        <button (click)="editProduct(product)">Editar</button>
+        <button (click)="deleteProduct(product.id)">Deletar</button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div *ngIf="showingForm" class="form-container">
+  <h3>{{ isEditing ? 'Alterar' : 'Cadastrar' }} Cliente</h3>
+  <form (ngSubmit)="saveProduct()">
+    <label for="name">Name:</label>
+    <input type="text" id="name" [(ngModel)]="newProduct.name" name="name" required>
+    <label for="email">Description:</label>
+    <input type="text" id="description" [(ngModel)]="newProduct.description" name="description" required>
+    <label for="price">Preço:</label>
+    <input type="number" id="price" [(ngModel)]="newProduct.price" name="price" step="0.01" required>
+    <label for="stock_quantity">Quantidade:</label>
+    <input type="number" id="stock_quantity" [(ngModel)]="newProduct.stock_quantity" name="stock_quantity" required>
+    <button type="submit">{{ isEditing ? 'Salvar alterações' : 'Cadastrar' }}</button>
+  </form>
+</div>

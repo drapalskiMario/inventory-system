@@ -1,0 +1,41 @@
+<h2>Clientes</h2>
+<div class="buttons">
+  <button (click)="showList()">Listar</button>
+  <button (click)="showForm()">Cadastrar</button>
+</div>
+
+<div *ngIf="showingList">
+  <h3>Lista de Clientes</h3>
+  <table>
+    <tr>
+      <th>Cod Client</th>
+      <th>Nome</th>
+      <th>Email</th>
+      <th>Telefone</th>
+      <th>Ações</th>
+    </tr>
+    <tr *ngFor="let customer of customers">
+      <td>{{ customer.id }}</td>
+      <td>{{ customer.name }}</td>
+      <td>{{ customer.email }}</td>
+      <td>{{ customer.phone }}</td>
+      <td class="buttons">
+        <button (click)="editCustomer(customer)">Editar</button>
+        <button (click)="deleteCustomer(customer.id)">Deletar</button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div *ngIf="showingForm" class="form-container">
+  <h3>{{ isEditing ? 'Alterar' : 'Cadastrar' }} Cliente</h3>
+  <form (ngSubmit)="saveCustomer()">
+    <label for="name">Name:</label>
+    <input type="text" id="name" [(ngModel)]="newCustomer.name" name="name" required>
+    <label for="email">Email:</label>
+    <input type="email" id="email" [(ngModel)]="newCustomer.email" name="email" required>
+    <label for="phone">Telefone:</label>
+    <input type="phone" id="phone" [(ngModel)]="newCustomer.phone" name="phone" required>
+    <button type="submit">{{ isEditing ? 'Salvar alterações' : 'Cadastrar' }}</button>
+  </form>
+</div>
