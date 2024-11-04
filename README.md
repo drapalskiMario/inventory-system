@@ -54,8 +54,8 @@ Para que a aplicação envie e-mails corretamente, você precisa configurar os p
         'default' => [
             'host' => 'sandbox.smtp.mailtrap.io',
             'port' => 587,
-            'username' => '264bb44921be98',
-            'password' => '9e714100342888',
+            'username' => 'username',
+            'password' => 'password',
             'className' => 'Smtp',
             'tls' => true,
         ],
